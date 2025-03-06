@@ -10,7 +10,7 @@ const EditUser = () => {
   const { id } = useParams();
 
   const [departments, setDepartments] = useState([]); // Store department list
-  const [selectDept, selectDeptID] = useState(""); // Store selected department ID
+  const [dep_id, selectDeptID] = useState(""); // Store selected department ID
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -32,13 +32,17 @@ const EditUser = () => {
         name,
         email,
         gender,
-        selectDept,
+        dep_id,
       });
       navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getUserById();
+  }, []);
 
   const getUserById = async () => {
     const response = await axios.get(`http://localhost:5000/users/${id}`);
@@ -47,10 +51,6 @@ const EditUser = () => {
     setGender(response.data.gender);
     selectDeptID(response.data.dep_id);
   };
-
-  useEffect(() => {
-    getUserById();
-  }, []);
 
   return (
     <div className="columns mt-5 is-centered">
@@ -86,7 +86,7 @@ const EditUser = () => {
             <div className="control">
               <div className="select is-fullwidth">
                 <select
-                  value={selectDept}
+                  value={dep_id}
                   onChange={(e) => selectDeptID(e.target.value)}
                 >
                   <option value="">Select Department</option>
