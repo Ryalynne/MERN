@@ -6,10 +6,12 @@ import {
   createUser,
   updateUser,
   deleteUser,
+  createDept,
 } from "../controllers/userController.js"; //  Added .js extension
 
 const router = express.Router();
 router.get("/dept", getDept);
+router.post("/deptAdd", createDept);
 //
 router.get("/", getUsers);
 router.get("/:id", getUserById);

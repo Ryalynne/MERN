@@ -67,3 +67,14 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const createDept = async (req, res) => {
+  try {
+    const { Department_Name } = req.body;
+    await sql.query`INSERT INTO Department (Department_Name) VALUES ( ${Department_Name})`;
+    res.status(201).json({ msg: "User Created" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
