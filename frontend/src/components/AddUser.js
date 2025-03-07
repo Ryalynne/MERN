@@ -8,35 +8,75 @@ const AddUser = () => {
   const [gender, setGender] = useState("Male");
   const navigate = useNavigate();
 
-  ///
-  const [departments, setDepartments] = useState([]); // Store department list
-  const [dep_id, setSelectedId] = useState(""); // Store selected department ID
+  // Department & Position State
+  const [departments, setDepartments] = useState([]);
+  const [dep_id, setDepId] = useState("");
+  const [positions, setPositions] = useState([]);
+  const [position_id, setPositionId] = useState("");
+  const [salary, setSalary] = useState("");
 
+  useEffect(() => {
+    const selectedPosition = positions.find(
+      (pos) => String(pos.id) === String(position_id)
+    );
+    setSalary(selectedPosition ? selectedPosition.salary : "");
+  }, [position_id, positions]);
+
+  // Fetch Departments on Mount
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
         const response = await axios.get("http://localhost:5000/users/dept");
-        setDepartments(response.data); // Store response data in state
+        setDepartments(response.data);
       } catch (error) {
         console.error("Error fetching departments:", error);
       }
     };
-
     fetchDepartments();
   }, []);
 
+  // Fetch Positions when Department Changes
+  useEffect(() => {
+    if (!dep_id) {
+      setPositions([]);
+      setPositionId("");
+      setSalary("");
+      return;
+    }
+
+    const fetchPositions = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/users/position/${dep_id}`
+        );
+        setPositions(response.data);
+      } catch (error) {
+        console.error("Error fetching positions:", error);
+      }
+    };
+
+    fetchPositions();
+  }, [dep_id]);
+
+  // Save User
   const saveUser = async (e) => {
     e.preventDefault();
+
+    if (!name || !email || !dep_id || !position_id) {
+      alert("Please fill in all required fields!");
+      return;
+    }
+
     try {
       await axios.post("http://localhost:5000/users", {
         name,
         email,
         gender,
-        dep_id,
+        position_id,
       });
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error("Error saving user:", error);
     }
   };
 
@@ -44,6 +84,7 @@ const AddUser = () => {
     <div className="columns mt-5 is-centered">
       <div className="column is-half">
         <form onSubmit={saveUser}>
+          {/* Full Name */}
           <div className="field">
             <label className="label">Full Name</label>
             <div className="control">
@@ -52,10 +93,13 @@ const AddUser = () => {
                 className="input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Name"
+                placeholder="Full Name"
+                required
               />
             </div>
           </div>
+
+          {/* Email */}
           <div className="field">
             <label className="label">Email</label>
             <div className="control">
@@ -65,17 +109,22 @@ const AddUser = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
+                required
               />
             </div>
           </div>
+
+          {/* Department */}
           <div className="field">
             <label className="label">Department</label>
             <div className="control">
               <div className="select is-fullwidth">
                 <select
                   value={dep_id}
-                  onChange={(e) => setSelectedId(e.target.value)}
+                  onChange={(e) => setDepId(e.target.value)}
+                  required
                 >
+                  <option value="">Select a department</option>
                   {departments.map((dep) => (
                     <option key={dep.id} value={dep.id}>
                       {dep.Department_Name}
@@ -86,6 +135,36 @@ const AddUser = () => {
             </div>
           </div>
 
+          {/* Position */}
+          <div className="field">
+            <label className="label">Position</label>
+            <div className="control">
+              <div className="select is-fullwidth">
+                <select
+                  value={position_id}
+                  onChange={(e) => setPositionId(e.target.value)}
+                  required
+                >
+                  <option value="">Select a position</option>
+                  {positions.map((pos) => (
+                    <option key={pos.id} value={pos.id}>
+                      {pos.position}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Salary */}
+          <div className="field">
+            <label className="label">Salary</label>
+            <div className="control">
+              <input type="text" className="input" value={salary} disabled />
+            </div>
+          </div>
+
+          {/* Gender */}
           <div className="field">
             <label className="label">Gender</label>
             <div className="control">
@@ -100,6 +179,8 @@ const AddUser = () => {
               </div>
             </div>
           </div>
+
+          {/* Submit Button */}
           <div className="field">
             <button type="submit" className="button is-success">
               Save

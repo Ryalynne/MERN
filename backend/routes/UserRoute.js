@@ -7,10 +7,14 @@ import {
   updateUser,
   deleteUser,
   createDept,
+  getPositions,
+  getSalary
 } from "../controllers/userController.js"; //  Added .js extension
 
 const router = express.Router();
 router.get("/dept", getDept);
+router.get("/position/:id", getPositions);
+router.get("/salary/:id", getSalary);
 router.post("/deptAdd", createDept);
 //
 router.get("/", getUsers);

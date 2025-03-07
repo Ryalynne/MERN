@@ -25,7 +25,7 @@ const UserList = () => {
 
   return (
     <div className="columns mt-5 is-centered">
-      <div className="column is-half">
+      <div className="column container">
         <Link to={`add`} className="button is-success">
           Add New
         </Link>
@@ -40,17 +40,21 @@ const UserList = () => {
               <th>Email</th>
               <th>Gender</th>
               <th>Department Name</th>
+              <th>Position</th>
+              <th>Salary</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user, index) => (
               <tr key={user.id}>
-                <td>{index + 1}</td>
+                <td>{user.id}</td>
                 <td>{user.full_name}</td>
                 <td>{user.email}</td>
                 <td>{user.gender}</td>
                 <td>{user.Department_Name}</td>
+                <td>{user.position}</td>
+                <td>{user.salary}</td>
                 <td>
                   <Link
                     to={`edit/${user.id}`}

@@ -10,10 +10,32 @@ export const getDept = async (req, res) => {
   }
 };
 
+export const getPositions = async (req, res) => {
+  try {
+    const result =
+      await sql.query`select * from User_Salary where dep_id = ${req.params.id}`;
+    res.status(200).json(result.recordset);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getSalary = async (req, res) => {
+  try {
+    const result =
+      await sql.query`select salary from User_Salary where id = ${req.params.id}`;
+    res.status(200).json(result.recordset);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const getUsers = async (req, res) => {
   try {
     const result = await sql.query(
-      "select Users.id , Users.full_name ,  Users.gender , Users.email, Department.Department_Name from Users inner join Department on Department.id = Users.dep_id"
+      "select Users.id , Users.full_name ,  Users.gender , Users.email , Department.Department_Name, User_Salary.position , User_Salary.salary from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Department on User_Salary.dep_id = Department.id "
     );
     res.status(200).json(result.recordset);
   } catch (error) {
@@ -25,7 +47,7 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const result =
-      await sql.query`select Users.full_name ,  Users.gender , Users.email, Users.dep_id ,Department.Department_Name from Users inner join Department on Department.id = Users.dep_id WHERE Users.id = ${req.params.id}`;
+      await sql.query`select Users.full_name ,  Users.gender , Users.email, Department.Department_Name from Users inner join Department on Department.id = Users.salary_id WHERE Users.id = ${req.params.id}`;
     if (result.recordset.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -38,8 +60,8 @@ export const getUserById = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { name, email, gender, dep_id } = req.body;
-    await sql.query`INSERT INTO Users (full_name, email , gender , dep_id) VALUES (${name}, ${email} , ${gender}  , ${dep_id})`;
+    const { name, email, gender, position_id } = req.body;
+    await sql.query`INSERT INTO Users (full_name, email , gender , salary_id) VALUES (${name}, ${email} , ${gender}  , ${position_id})`;
     res.status(201).json({ msg: "User Created" });
   } catch (error) {
     console.error(error.message);
