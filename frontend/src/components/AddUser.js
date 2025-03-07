@@ -25,7 +25,6 @@ const AddUser = () => {
     fetchDepartments();
   }, []);
 
-
   const saveUser = async (e) => {
     e.preventDefault();
     try {
@@ -61,7 +60,7 @@ const AddUser = () => {
             <label className="label">Email</label>
             <div className="control">
               <input
-                type="text"
+                type="email"
                 className="input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -77,7 +76,6 @@ const AddUser = () => {
                   value={dep_id}
                   onChange={(e) => setSelectedId(e.target.value)}
                 >
-                  <option value="">Select Department</option>
                   {departments.map((dep) => (
                     <option key={dep.id} value={dep.id}>
                       {dep.Department_Name}

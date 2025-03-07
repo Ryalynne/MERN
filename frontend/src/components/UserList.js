@@ -35,7 +35,7 @@ const UserList = () => {
         <table className="table is-striped is-fullwidth">
           <thead>
             <tr>
-              <th>No</th>
+              <th>Employee ID</th>
               <th>Name</th>
               <th>Email</th>
               <th>Gender</th>

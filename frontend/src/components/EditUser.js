@@ -12,6 +12,18 @@ const EditUser = () => {
   const [departments, setDepartments] = useState([]); // Store department list
   const [dep_id, selectDeptID] = useState(""); // Store selected department ID
 
+  const getUserById = async () => {
+    const response = await axios.get(`http://localhost:5000/users/${id}`);
+    setName(response.data.full_name);
+    setEmail(response.data.email);
+    setGender(response.data.gender);
+    selectDeptID(response.data.dep_id);
+  };
+
+  useEffect(() => {
+    getUserById();
+  }, []);
+
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
@@ -40,18 +52,6 @@ const EditUser = () => {
     }
   };
 
-  useEffect(() => {
-    getUserById();
-  }, []);
-
-  const getUserById = async () => {
-    const response = await axios.get(`http://localhost:5000/users/${id}`);
-    setName(response.data.full_name);
-    setEmail(response.data.email);
-    setGender(response.data.gender);
-    selectDeptID(response.data.dep_id);
-  };
-
   return (
     <div className="columns mt-5 is-centered">
       <div className="column is-half">
@@ -72,7 +72,7 @@ const EditUser = () => {
             <label className="label">Email</label>
             <div className="control">
               <input
-                type="text"
+                type="email"
                 className="input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -89,7 +89,6 @@ const EditUser = () => {
                   value={dep_id}
                   onChange={(e) => selectDeptID(e.target.value)}
                 >
-                  <option value="">Select Department</option>
                   {departments.map((dep) => (
                     <option key={dep.id} value={dep.id}>
                       {dep.Department_Name}
