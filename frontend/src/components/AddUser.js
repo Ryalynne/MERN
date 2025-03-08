@@ -26,7 +26,7 @@ const AddUser = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/users/dept");
+        const response = await axios.get("http://localhost:5000/users/getDept");
         setDepartments(response.data);
       } catch (error) {
         console.error("Error fetching departments:", error);
@@ -47,7 +47,7 @@ const AddUser = () => {
     const fetchPositions = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users/position/${dep_id}`
+          `http://localhost:5000/users/getPosition/${dep_id}`
         );
         setPositions(response.data);
       } catch (error) {
@@ -74,7 +74,7 @@ const AddUser = () => {
         gender,
         position_id,
       });
-      navigate("/");
+      navigate("/add");
     } catch (error) {
       console.error("Error saving user:", error);
     }
@@ -111,6 +111,21 @@ const AddUser = () => {
                 placeholder="Email"
                 required
               />
+            </div>
+          </div>
+          {/* Gender */}
+          <div className="field">
+            <label className="label">Gender</label>
+            <div className="control">
+              <div className="select is-fullwidth">
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -160,23 +175,12 @@ const AddUser = () => {
           <div className="field">
             <label className="label">Salary</label>
             <div className="control">
-              <input type="text" className="input" value={salary} disabled />
-            </div>
-          </div>
-
-          {/* Gender */}
-          <div className="field">
-            <label className="label">Gender</label>
-            <div className="control">
-              <div className="select is-fullwidth">
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-              </div>
+              <input
+                type="text"
+                className="input"
+                value={salary ? `₱${parseFloat(salary).toLocaleString("en-PH", { minimumFractionDigits: 2 })}` : ""}
+                disabled
+              />
             </div>
           </div>
 

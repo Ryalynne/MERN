@@ -47,7 +47,7 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const result =
-      await sql.query`select Users.full_name ,  Users.gender , Users.email, Department.Department_Name from Users inner join Department on Department.id = Users.salary_id WHERE Users.id = ${req.params.id}`;
+      await sql.query`select * from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Department on User_Salary.dep_id = Department.id WHERE Users.id = ${req.params.id}`;
     if (result.recordset.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -69,10 +69,21 @@ export const createUser = async (req, res) => {
   }
 };
 
+export const createSalary = async (req, res) => {
+  try {
+    const { dep_id, Position, Salary } = req.body;
+    await sql.query`INSERT INTO User_Salary (dep_id, position,salary) VALUES (${dep_id}, ${Position} , ${Salary})`;
+    res.status(201).json({ msg: "Salary Created" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const updateUser = async (req, res) => {
   try {
-    const { name, email, gender, dep_id } = req.body;
-    await sql.query`UPDATE Users SET full_name = ${name}, email = ${email}, gender = ${gender} , dep_id = ${dep_id} WHERE id = ${req.params.id}`;
+    const { name, email, gender, position_id } = req.body;
+    await sql.query`UPDATE Users SET full_name = ${name}, email = ${email}, gender = ${gender} , salary_id = ${position_id} WHERE id = ${req.params.id}`;
     res.status(200).json({ msg: "User Updated" });
   } catch (error) {
     console.error(error.message);

@@ -6,11 +6,25 @@ const EditUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("Male");
+  const [positions, setPositions] = useState([]);
+  const [position_id, setPositionId] = useState("");
+  const [salary, setSalary] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [departments, setDepartments] = useState([]); // Store department list
   const [dep_id, selectDeptID] = useState(""); // Store selected department ID
+
+  useEffect(() => {
+    const selectedPosition = positions.find(
+      (pos) => String(pos.id) === String(position_id)
+    );
+    setSalary(selectedPosition ? selectedPosition.salary : "");
+  }, [position_id, positions]);
+
+  useEffect(() => {
+    getUserById();
+  }, []);
 
   const getUserById = async () => {
     const response = await axios.get(`http://localhost:5000/users/${id}`);
@@ -18,16 +32,48 @@ const EditUser = () => {
     setEmail(response.data.email);
     setGender(response.data.gender);
     selectDeptID(response.data.dep_id);
+    setPositionId(response.data.salary_id);
   };
 
+  // Fetch Positions when Department Changes
   useEffect(() => {
-    getUserById();
+    if (!dep_id) {
+      setPositions([]);
+      setPositionId("");
+      setSalary("");
+      return;
+    }
+
+    const fetchPositions = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/users/getPosition/${dep_id}`
+        );
+        setPositions(response.data);
+      } catch (error) {
+        console.error("Error fetching positions:", error);
+      }
+    };
+
+    fetchPositions();
+  }, [dep_id]);
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/users/getDept");
+        setDepartments(response.data);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    };
+    fetchDepartments();
   }, []);
 
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/users/dept");
+        const response = await axios.get("http://localhost:5000/users/getDept");
         setDepartments(response.data); // Store response data in state
       } catch (error) {
         console.error("Error fetching departments:", error);
@@ -44,7 +90,7 @@ const EditUser = () => {
         name,
         email,
         gender,
-        dep_id,
+        position_id,
       });
       navigate("/");
     } catch (error) {
@@ -80,6 +126,20 @@ const EditUser = () => {
               />
             </div>
           </div>
+          <div className="field">
+            <label className="label">Gender</label>
+            <div className="control">
+              <div className="select is-fullwidth">
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </div>
+          </div>
           {/* // ----------------------------------------------------------- */}
           <div className="field">
             <label className="label">Department</label>
@@ -98,19 +158,44 @@ const EditUser = () => {
               </div>
             </div>
           </div>
-          {/* // ayaw mag select ng bago------------------------------------ */}
+
+          {/* Position */}
           <div className="field">
-            <label className="label">Gender</label>
+            <label className="label">Position</label>
             <div className="control">
               <div className="select is-fullwidth">
                 <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
+                  value={position_id}
+                  onChange={(e) => setPositionId(e.target.value)}
+                  required
                 >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="">Select a position</option>
+                  {positions.map((pos) => (
+                    <option key={pos.id} value={pos.id}>
+                      {pos.position}
+                    </option>
+                  ))}
                 </select>
               </div>
+            </div>
+          </div>
+
+          {/* Salary */}
+          <div className="field">
+            <label className="label">Salary</label>
+            <div className="control">
+              <input
+                type="text"
+                className="input"
+                value={
+                  salary
+                    ? `₱${parseFloat(salary).toLocaleString("en-PH", {
+                        minimumFractionDigits: 2,
+                      })}`
+                    : ""
+                }
+                disabled
+              />
             </div>
           </div>
           <div className="field">

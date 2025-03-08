@@ -8,15 +8,18 @@ import {
   deleteUser,
   createDept,
   getPositions,
-  getSalary
+  getSalary,
+  createSalary
 } from "../controllers/userController.js"; //  Added .js extension
 
 const router = express.Router();
-router.get("/dept", getDept);
-router.get("/position/:id", getPositions);
-router.get("/salary/:id", getSalary);
-router.post("/deptAdd", createDept);
-//
+//dept
+router.get("/getDept", getDept);
+router.get("/getPosition/:id", getPositions);
+router.get("/getSalary/:id", getSalary);
+router.post("/addDept", createDept);
+router.post("/addSalary", createSalary);
+//user
 router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.post("/", createUser);

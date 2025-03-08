@@ -32,6 +32,9 @@ const UserList = () => {
         <Link to={`department`} className="button is-success ml-3">
           Add Department
         </Link>
+        <Link to={`salary`} className="button is-success ml-3">
+          Add Salary
+        </Link>
         <table className="table is-striped is-fullwidth">
           <thead>
             <tr>
@@ -54,7 +57,13 @@ const UserList = () => {
                 <td>{user.gender}</td>
                 <td>{user.Department_Name}</td>
                 <td>{user.position}</td>
-                <td>{user.salary}</td>
+                <td>
+                  {user.salary
+                    ? `₱${parseFloat(user.salary).toLocaleString("en-PH", {
+                        minimumFractionDigits: 2,
+                      })}`
+                    : ""}
+                </td>
                 <td>
                   <Link
                     to={`edit/${user.id}`}

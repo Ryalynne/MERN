@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -9,10 +9,10 @@ function AddDept() {
   const saveDepartment = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/users/deptAdd", {
+      await axios.post("http://localhost:5000/users/addDept", {
         Department_Name,
       });
-      navigate("/");
+      navigate("/department");
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +30,7 @@ function AddDept() {
                 className="input"
                 value={Department_Name}
                 onChange={(e) => setDept(e.target.value)}
-                placeholder="Name"
+                placeholder="Department Name"
               />
             </div>
           </div>
