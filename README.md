@@ -20,11 +20,11 @@ A simple MERN (MongoDB, Express, React, Node.js) stack application using Microso
    - Set up your database.
    - Create a `.env` file in the backend:
      ```env
-     DB_USER=your_user
-     DB_PASSWORD=your_password
-     DB_NAME=your_db
-     DB_HOST=your_host
-     JWT_SECRET=your_secret
+      DB_USER=
+      DB_PASS=
+      DB_SERVER=
+      DB_NAME=
+      DB_PORT=
      ```
 
 4. **Run the application:**
