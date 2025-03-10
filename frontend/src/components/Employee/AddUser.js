@@ -137,7 +137,7 @@ const AddUser = () => {
                   onChange={(e) => setDepId(e.target.value)}
                   required
                 >
-                  <option value="">Select a department</option>
+                  <option value="">Select a job title</option>
                   {departments.map((dep) => (
                     <option key={dep.id} value={dep.id}>
                       {dep.Job_Title}
@@ -158,7 +158,7 @@ const AddUser = () => {
                   onChange={(e) => setPositionId(e.target.value)}
                   required
                 >
-                  <option value="">Select a position</option>
+                  <option value="">Select a position / level</option>
                   {positions.map((pos) => (
                     <option key={pos.id} value={pos.id}>
                       {pos.position}

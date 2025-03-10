@@ -20,7 +20,7 @@ const EditSalary = () => {
         `http://localhost:5000/salary/getSalary/${id}`
       );
       console.log(response.data);
-      setDepId(response.data.dep_id);
+      setDepId(response.data.job_id);
       setPosition(response.data.position);
       setSalary(response.data.salary);
     } catch (error) {

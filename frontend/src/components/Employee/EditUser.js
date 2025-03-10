@@ -33,7 +33,7 @@ const EditUser = () => {
     setName(response.data.full_name);
     setEmail(response.data.email);
     setGender(response.data.gender);
-    selectDeptID(response.data.dep_id);
+    selectDeptID(response.data.job_id);
     setPositionId(response.data.salary_id);
   };
 
