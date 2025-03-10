@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Navbar";
 const AddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -77,7 +76,6 @@ const AddUser = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="column is-half container">
         <form onSubmit={saveUser}>
           {/* Full Name */}

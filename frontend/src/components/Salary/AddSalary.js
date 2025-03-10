@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Navbar";
+
 function AddSalary() {
   const [Position, setPosition] = useState("");
   const [Salary, setSalary] = useState("");
@@ -38,7 +38,6 @@ function AddSalary() {
 
   return (
     <div>
-      <Navbar />
       <div className="column is-half container">
         <form onSubmit={saveSalary}>
           {/* Department */}

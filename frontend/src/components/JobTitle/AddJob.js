@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Navbar";
+
 function AddDept() {
   const [Department_Name, setDept] = useState("");
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ function AddDept() {
 
   return (
     <div>
-      <Navbar />
       <div className="column is-half container">
         <form onSubmit={saveDepartment}>
           <div className="field">

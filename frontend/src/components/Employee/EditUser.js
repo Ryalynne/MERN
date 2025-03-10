@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "../Navbar";
 
 const EditUser = () => {
   const [name, setName] = useState("");
@@ -89,7 +88,6 @@ const EditUser = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="column is-half container">
         <form onSubmit={updateUser}>
           <div className="field">
