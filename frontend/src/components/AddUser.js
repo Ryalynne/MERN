@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const AddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("Male");
+  const [gender, setGender] = useState("");
   const navigate = useNavigate();
 
   // Department & Position State
@@ -121,7 +121,9 @@ const AddUser = () => {
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
+                  required
                 >
+                  <option value="">Select a Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>

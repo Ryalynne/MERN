@@ -40,6 +40,7 @@ const UserList = () => {
               <th>Department Name</th>
               <th>Position</th>
               <th>Salary</th>
+              <th>Anual Salary</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -57,6 +58,16 @@ const UserList = () => {
                     ? `₱${parseFloat(user.salary).toLocaleString("en-PH", {
                         minimumFractionDigits: 2,
                       })}`
+                    : ""}
+                </td>
+                <td>
+                  {user.anual_salary
+                    ? `₱${parseFloat(user.anual_salary).toLocaleString(
+                        "en-PH",
+                        {
+                          minimumFractionDigits: 2,
+                        }
+                      )}`
                     : ""}
                 </td>
                 <td>

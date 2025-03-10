@@ -47,7 +47,7 @@ export const getSalary = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const result = await sql.query(
-      "select Users.id , Users.full_name ,  Users.gender , Users.email , Department.Department_Name, User_Salary.position , User_Salary.salary from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Department on User_Salary.dep_id = Department.id "
+      "select Users.id , Users.full_name ,  Users.gender , Users.email , Department.Department_Name, User_Salary.position , User_Salary.salary , User_Salary.salary * 12 as anual_salary from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Department on User_Salary.dep_id = Department.id "
     );
     res.status(200).json(result.recordset);
   } catch (error) {

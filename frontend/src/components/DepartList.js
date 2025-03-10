@@ -25,6 +25,7 @@ function DepartList() {
             <tr>
               <th>Department ID</th>
               <th>Department Name</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -32,6 +33,10 @@ function DepartList() {
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.Department_Name}</td>
+                <td>
+                  <button className="button is-small is-info mr-2">Edit</button>
+                  <button className="button is-small is-danger">Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>

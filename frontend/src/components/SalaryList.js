@@ -29,6 +29,7 @@ function SalaryList() {
               <th>Department Name</th>
               <th>Position</th>
               <th>Salary</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -43,6 +44,10 @@ function SalaryList() {
                         minimumFractionDigits: 2,
                       })}`
                     : ""}
+                </td>
+                <td>
+                  <button className="button is-small is-info mr-2">Edit</button>
+                  <button className="button is-small is-danger">Delete</button>
                 </td>
               </tr>
             ))}
