@@ -2,10 +2,10 @@ import { NavLink, Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="navbar is-light">
+    <nav className="navbar is-dark">
       <div className="navbar-brand">
         <Link to="/" className="navbar-item">
-          <h1 className="title is-4">MERN</h1>
+          <h1 className="title is-4 has-text-white">MERN</h1>
         </Link>
       </div>
       <div className="navbar-menu">
