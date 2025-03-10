@@ -27,7 +27,7 @@ const UserList = () => {
 
   // Filter users based on search term
   const filteredUsers = users.filter((user) =>
-    `${user.full_name} ${user.email} ${user.Job_Title} ${user.position}`
+    `${user.full_name} ${user.email} ${user.Job_Title} ${user.position} ${user.id}`
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
   );
@@ -44,7 +44,7 @@ const UserList = () => {
             type="text"
             className="input"
             style={{ maxWidth: "300px" }}
-            placeholder="Search by Name, Email, Job Title, or Position..."
+            placeholder="Search by Employee ID, Name, Email, Job Title, or Position..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
