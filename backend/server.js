@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import sql from "mssql";
-import UserRoute from "./routes/UserRoute.js"; // ✅ Corrected import
+import UserRoute from "./routes/EmployeeRouter.js"; // ✅ Corrected import
+import Job_Title from "./routes/JobTitleRouter.js";
+import Salary from "./routes/SalaryRouter.js";
 
 dotenv.config();
 
@@ -44,5 +46,7 @@ app.get("/", (req, res) => {
   return res.json({ message: "Backend Working" });
 });
 
-// Use user routes
+// Use routes
 app.use("/users", UserRoute);
+app.use("/salary", Salary);
+app.use("/job", Job_Title);

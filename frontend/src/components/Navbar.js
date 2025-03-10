@@ -11,12 +11,12 @@ const Navbar = () => {
       <div className="navbar-menu">
         <div className="navbar-start">
           <NavLink
-            to="/DepartmentList"
+            to="/JobTitleList"
             className={({ isActive }) =>
               isActive ? "navbar-item is-active" : "navbar-item"
             }
           >
-            Department
+            JobTitle
           </NavLink>
           <NavLink
             to="/SalaryList"

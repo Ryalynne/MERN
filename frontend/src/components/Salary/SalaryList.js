@@ -1,0 +1,65 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import Navbar from "../Navbar";
+function SalaryList() {
+  const [salaries, setSalary] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    const response = await axios.get("http://localhost:5000/salary");
+    setSalary(response.data);
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <div className="column container">
+        <Link to={`/AddSalary`} className="button is-success ml-3">
+          Add Salary
+        </Link>
+        <table className="table is-striped is-fullwidth">
+          <thead>
+            <tr>
+              <th>Salary ID</th>
+              <th>Job Title</th>
+              <th>Position / Level</th>
+              <th>Salary</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {salaries.map((user, index) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.Job_Title}</td>
+                <td>{user.position}</td>
+                <td>
+                  {user.salary
+                    ? `₱${parseFloat(user.salary).toLocaleString("en-PH", {
+                        minimumFractionDigits: 2,
+                      })}`
+                    : ""}
+                </td>
+                <td>
+                  <Link
+                    to={`/editSalary/${user.id}`}
+                    className="button is-small is-info mr-2"
+                  >
+                    Edit
+                  </Link>
+                  <button className="button is-small is-danger">Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default SalaryList;

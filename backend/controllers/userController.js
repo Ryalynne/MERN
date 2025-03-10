@@ -1,8 +1,8 @@
 import sql from "mssql";
 
-export const getDept = async (req, res) => {
+export const getTitle = async (req, res) => {
   try {
-    const result = await sql.query("select * from Department");
+    const result = await sql.query("select * from Job_Title");
     res.status(200).json(result.recordset);
   } catch (error) {
     console.error(error.message);
@@ -13,7 +13,7 @@ export const getDept = async (req, res) => {
 export const getSalaryList = async (req, res) => {
   try {
     const result = await sql.query(
-      "select User_Salary.id, User_Salary.position,  User_Salary.salary,  Department.Department_Name from User_Salary inner join Department on User_Salary.dep_id = Department.id"
+      "select User_Salary.id, User_Salary.position,  User_Salary.salary,  Job_Title.Job_Title from User_Salary inner join Job_Title on User_Salary.dep_id = Job_Title.id"
     );
     res.status(200).json(result.recordset);
   } catch (error) {
@@ -36,18 +36,28 @@ export const getPositions = async (req, res) => {
 export const getSalary = async (req, res) => {
   try {
     const result =
-      await sql.query`select salary from User_Salary where id = ${req.params.id}`;
-    res.status(200).json(result.recordset);
+      await sql.query`select * from User_Salary where id = ${req.params.id}`;
+    res.status(200).json(result.recordset[0]);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
+export const getTitleByID = async (req, res) => {
+  try {
+    const result =
+      await sql.query`select * from Job_Title WHERE id = ${req.params.id}`;
+    res.status(200).json(result.recordset[0]);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 export const getUsers = async (req, res) => {
   try {
     const result = await sql.query(
-      "select Users.id , Users.full_name ,  Users.gender , Users.email , Department.Department_Name, User_Salary.position , User_Salary.salary , User_Salary.salary * 12 as anual_salary from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Department on User_Salary.dep_id = Department.id "
+      "select Users.id , Users.full_name ,  Users.gender , Users.email , Job_Title.Job_Title, User_Salary.position , User_Salary.salary , User_Salary.salary * 12 as anual_salary from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Job_Title on User_Salary.dep_id = Job_Title.id "
     );
     res.status(200).json(result.recordset);
   } catch (error) {
@@ -59,7 +69,7 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const result =
-      await sql.query`select * from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Department on User_Salary.dep_id = Department.id WHERE Users.id = ${req.params.id}`;
+      await sql.query`select * from Users inner join User_Salary on Users.salary_id = User_salary.id inner join Job_Title on User_Salary.dep_id = Job_Title.id WHERE Users.id = ${req.params.id}`;
     if (result.recordset.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -116,8 +126,32 @@ export const deleteUser = async (req, res) => {
 export const createDept = async (req, res) => {
   try {
     const { Department_Name } = req.body;
-    await sql.query`INSERT INTO Department (Department_Name) VALUES ( ${Department_Name})`;
+    await sql.query`INSERT INTO Job_Title (Job_Title) VALUES ( ${Department_Name})`;
     res.status(201).json({ msg: "User Created" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//
+
+export const updateSalary = async (req, res) => {
+  try {
+    const { depId, position, salary } = req.body;
+    await sql.query`UPDATE User_Salary SET dep_id = ${depId}, position = ${position}, salary = ${salary} WHERE id = ${req.params.id}`;
+    res.status(200).json({ msg: "User Updated" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updateJobTitle = async (req, res) => {
+  try {
+    const { job_title } = req.body;
+    await sql.query`UPDATE Job_title SET Job_title = ${job_title} WHERE id = ${req.params.id}`;
+    res.status(200).json({ msg: "User Updated" });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Internal Server Error" });
