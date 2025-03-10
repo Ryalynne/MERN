@@ -17,7 +17,7 @@ function DepartList() {
     <div>
       <Navbar />
       <div className="column container">
-        <Link to={`department`} className="button is-success ml-3">
+        <Link to={`/AddDepartment`} className="button is-success ml-3">
           Add Department
         </Link>
         <table className="table is-striped is-fullwidth">

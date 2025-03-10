@@ -11,13 +11,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="SalaryList/salary" element={<AddSalary/>}/>
-        <Route path="add" element={<AddUser/>}/>
-        <Route path="deptList/department" element={<AddDept/>}/>
+        <Route path="AddSalary" element={<AddSalary/>}/>
+        <Route path="AddEmployee" element={<AddUser/>}/>
+        <Route path="AddDepartment" element={<AddDept/>}/>
+
         <Route path="edit/:id" element={<EditUser/>}/>
         <Route path="/" element={<UserList/>}/>
-        <Route path="deptList" element={<DepartList/>}/>
-        <Route path="salaryList" element={<SalaryList/>}/>
+        <Route path="DepartmentList" element={<DepartList/>}/>
+        <Route path="SalaryList" element={<SalaryList/>}/>
       </Routes>
     </BrowserRouter>
   );

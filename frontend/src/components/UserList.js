@@ -27,8 +27,8 @@ const UserList = () => {
     <div>
       <Navbar />
       <div className="column container">
-        <Link to={`add`} className="button is-success">
-          Add New
+        <Link to={`AddEmployee`} className="button is-success">
+          Add Employee
         </Link>
         <table className="table is-striped is-fullwidth">
           <thead>

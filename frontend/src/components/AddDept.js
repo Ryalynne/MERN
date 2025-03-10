@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function AddDept() {
       await axios.post("http://localhost:5000/users/addDept", {
         Department_Name,
       });
-      navigate("/deptList");
+      navigate("/DepartmentList");
     } catch (error) {
       console.log(error);
     }

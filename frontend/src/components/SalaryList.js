@@ -19,7 +19,7 @@ function SalaryList() {
     <div>
       <Navbar />
       <div className="column container">
-        <Link to={`salary`} className="button is-success ml-3">
+        <Link to={`/AddSalary`} className="button is-success ml-3">
           Add Salary
         </Link>
         <table className="table is-striped is-fullwidth">
