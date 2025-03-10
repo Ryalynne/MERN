@@ -13,7 +13,7 @@ A simple MERN (MongoDB, Express, React, Node.js) stack application using Microso
 2. **Install dependencies:**
    ```sh
    cd backend && npm install
-   cd ../frontend && npm install
+   cd frontend && npm install
    ```
 
 3. **Configure MSSQL:**
@@ -29,8 +29,8 @@ A simple MERN (MongoDB, Express, React, Node.js) stack application using Microso
 
 4. **Run the application:**
    ```sh
-   cd backend && npm run dev
-   cd ../frontend && npm start
+   cd backend && npm start
+   cd frontend && npm start
    ```
 
 ## Features
