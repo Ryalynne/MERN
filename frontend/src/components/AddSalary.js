@@ -17,7 +17,7 @@ function AddSalary() {
         Position,
         Salary,
       });
-      navigate("/salary");
+      navigate("/salaryList");
     } catch (error) {
       console.log(error);
     }

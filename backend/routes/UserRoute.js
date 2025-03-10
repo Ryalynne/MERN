@@ -9,11 +9,13 @@ import {
   createDept,
   getPositions,
   getSalary,
-  createSalary
+  createSalary,
+  getSalaryList,
 } from "../controllers/userController.js"; //  Added .js extension
 
 const router = express.Router();
 //dept
+router.get("/getSalaryList", getSalaryList);
 router.get("/getDept", getDept);
 router.get("/getPosition/:id", getPositions);
 router.get("/getSalary/:id", getSalary);

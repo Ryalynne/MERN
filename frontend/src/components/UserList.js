@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import Navbar from "./Navbar";
 const UserList = () => {
   const [users, setUser] = useState([]);
 
@@ -24,16 +24,11 @@ const UserList = () => {
   };
 
   return (
-    <div className="columns mt-5 is-centered">
+    <div>
+      <Navbar />
       <div className="column container">
         <Link to={`add`} className="button is-success">
           Add New
-        </Link>
-        <Link to={`department`} className="button is-success ml-3">
-          Add Department
-        </Link>
-        <Link to={`salary`} className="button is-success ml-3">
-          Add Salary
         </Link>
         <table className="table is-striped is-fullwidth">
           <thead>

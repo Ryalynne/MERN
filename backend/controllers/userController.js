@@ -10,6 +10,18 @@ export const getDept = async (req, res) => {
   }
 };
 
+export const getSalaryList = async (req, res) => {
+  try {
+    const result = await sql.query(
+      "select User_Salary.id, User_Salary.position,  User_Salary.salary,  Department.Department_Name from User_Salary inner join Department on User_Salary.dep_id = Department.id"
+    );
+    res.status(200).json(result.recordset);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const getPositions = async (req, res) => {
   try {
     const result =

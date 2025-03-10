@@ -12,7 +12,7 @@ function AddDept() {
       await axios.post("http://localhost:5000/users/addDept", {
         Department_Name,
       });
-      navigate("/department");
+      navigate("/deptList");
     } catch (error) {
       console.log(error);
     }
@@ -31,6 +31,7 @@ function AddDept() {
                 value={Department_Name}
                 onChange={(e) => setDept(e.target.value)}
                 placeholder="Department Name"
+                required
               />
             </div>
           </div>

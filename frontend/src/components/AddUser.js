@@ -74,7 +74,7 @@ const AddUser = () => {
         gender,
         position_id,
       });
-      navigate("/add");
+      navigate("/");
     } catch (error) {
       console.error("Error saving user:", error);
     }
