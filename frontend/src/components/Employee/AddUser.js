@@ -76,7 +76,7 @@ const AddUser = () => {
 
   return (
     <div>
-      <div className="column is-half container">
+      <div className="column is-half container mt-5">
         <form onSubmit={saveUser}>
           {/* Full Name */}
           <div className="field">

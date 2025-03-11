@@ -12,8 +12,8 @@ const EditUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [departments, setDepartments] = useState([]); // Store department list
-  const [dep_id, selectDeptID] = useState(""); // Store selected department ID
+  const [departments, setDepartments] = useState([]);
+  const [dep_id, selectDeptID] = useState("");
 
   useEffect(() => {
     const selectedPosition = positions.find(
@@ -23,18 +23,22 @@ const EditUser = () => {
   }, [position_id, positions]);
 
   useEffect(() => {
-    getUserById();
-  }, []);
+    const getUserById = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/users/${id}`);
+        console.log("Full API Response:", response.data.full_name);
+        setName(response.data.full_name);
+        setEmail(response.data.email);
+        setGender(response.data.gender);
+        selectDeptID(response.data.job_id);
+        setPositionId(response.data.salary_id);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
 
-  const getUserById = async () => {
-    const response = await axios.get(`http://localhost:5000/users/${id}`);
-    console.log("Full API Response:", response.data.full_name);
-    setName(response.data.full_name);
-    setEmail(response.data.email);
-    setGender(response.data.gender);
-    selectDeptID(response.data.job_id);
-    setPositionId(response.data.salary_id);
-  };
+    getUserById();
+  }, [id]);
 
   // Fetch Positions when Department Changes
   useEffect(() => {
@@ -88,7 +92,7 @@ const EditUser = () => {
 
   return (
     <div>
-      <div className="column is-half container">
+      <div className="column is-half container mt-5">
         <form onSubmit={updateUser}>
           <div className="field">
             <label className="label">Name</label>

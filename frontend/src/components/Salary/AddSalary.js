@@ -38,7 +38,7 @@ function AddSalary() {
 
   return (
     <div>
-      <div className="column is-half container">
+      <div className="column is-half container mt-5">
         <form onSubmit={saveSalary}>
           {/* Department */}
           <div className="field">

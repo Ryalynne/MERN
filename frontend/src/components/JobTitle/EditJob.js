@@ -8,19 +8,19 @@ const EditSalary = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    getJob();
-  }, []);
+    const fetchJob = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/job/getJobTitle/${id}`
+        );
+        setJob(response.data.Job_Title);
+      } catch (error) {
+        console.error("Error fetching Job Title:", error);
+      }
+    };
 
-  const getJob = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/job/getJobTitle/${id}`
-      );
-      setJob(response.data.Job_Title);
-    } catch (error) {
-      console.error("Error fetching Job Title:", error);
-    }
-  };
+    fetchJob();
+  }, [id]);
 
   //save/update
   const saveJob = async (e) => {
@@ -37,7 +37,7 @@ const EditSalary = () => {
 
   return (
     <div>
-      <div className="column is-half container">
+      <div className="column is-half container mt-5">
         <form onSubmit={saveJob}>
           {/* Job Title */}
           <div className="field">

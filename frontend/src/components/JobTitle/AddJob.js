@@ -20,7 +20,7 @@ function AddDept() {
 
   return (
     <div>
-      <div className="column is-half container">
+      <div className="column is-half container mt-5">
         <form onSubmit={saveDepartment}>
           <div className="field">
             <label className="label">Job Title</label>
