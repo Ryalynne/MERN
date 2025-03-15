@@ -314,7 +314,7 @@ const UserList = () => {
         job_id: parseInt(newEmployee.job_id),
       };
       await axios.post("http://localhost:5000/users", payload);
-      setIsAdding(false);
+      // Reset form but keep adding mode active for continuous adding
       setNewEmployee({
         full_name: "",
         gender: "",
@@ -332,11 +332,13 @@ const UserList = () => {
       setAddJobSearch("");
       setAddPositionSearch("");
       await getUsers();
+      // Removed setIsAdding(false) to allow continuous adding
     } catch (error) {
       console.error(
         "Error adding employee:",
         error.response?.data || error.message
       );
+      alert("Failed to add employee: " + (error.response?.data?.message || error.message));
     }
   };
 
