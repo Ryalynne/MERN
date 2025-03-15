@@ -164,6 +164,8 @@ function SalaryList() {
   // Add Functionality
   const startAdding = () => {
     setIsAdding(true);
+    setNewSalary({ dep_id: "", Position: "", Salary: "" }); // Reset form on start
+    setAddErrors({ dep_id: false, Position: false, Salary: false });
     setAddJobSearch("");
   };
 
@@ -200,10 +202,11 @@ function SalaryList() {
       };
       await axios.post("http://localhost:5000/salary", payload);
       await getUsers();
+      // Reset form but keep adding mode active
       setNewSalary({ dep_id: "", Position: "", Salary: "" });
       setAddErrors({ dep_id: false, Position: false, Salary: false });
-      setIsAdding(false);
       setAddJobSearch("");
+      // Removed setIsAdding(false) to allow continuous adding
     } catch (error) {
       console.error("Error adding salary:", error);
       alert("Failed to add salary: " + (error.response?.data?.message || error.message));
